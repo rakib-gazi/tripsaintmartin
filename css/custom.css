@@ -1,0 +1,76 @@
+ /* logo image  */
+.logo-img{
+    height: 40px!important;
+    width: 100px!important;
+}
+/* about part progress animation*/
+
+@keyframes progressAnimation {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+.progress-bar {
+    animation: progressAnimation 3s linear infinite;
+}
+/* project part isotope*/
+/* Custom CSS for grid layout */
+#project_filter {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* Three columns */
+    gap: 2rem; /* Gap between grid items */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    #project_filter {
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* Two columns on smaller screens */
+    }
+}
+
+/* Hide default date input icon */
+input[type="date"].custom-date-input::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+input[type="date"].custom-date-input::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
+input[type="date"].custom-date-input::-webkit-clear-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
+input[type="date"].custom-date-input {
+    position: relative;
+    z-index: 10;
+}
+
+/*reservation copy css*/
+
+
+.font-obeo {
+    font-family: "Montserrat", sans-serif;
+}
+.font-rflex {
+    font-family: "Roboto Flex", sans-serif;
+}
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #printableArea, #printableArea * {
+        visibility: visible;
+    }
+    #printableArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+.text-blue-obeo{
+    color: #0000ff!important;
+}
