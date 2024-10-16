@@ -1,6 +1,7 @@
 <?php 
 include ('dashboard-header.php');
  include ('../function/blog_auth.php');
+ include ('../function/categories_auth.php');
 
 if(isset($_POST['updateBlogSubmit'])){
     $old=$_POST;
@@ -26,6 +27,19 @@ if (isset($_POST['blog_delete'])) {
 
 // Fetch data for the current page
 $blog_view = blog_view();
+
+$category_form_view = category_form_view();
+if (mysqli_num_rows($category_form_view) > 0) {
+    while ($category_name = mysqli_fetch_assoc($category_form_view)) {
+        $category_names[] = $category_name['category'];
+    }
+}
+$subCategoryFormView = subCategoryFormView();
+if (mysqli_num_rows($subCategoryFormView) > 0) {
+    while ($subCategoryName = mysqli_fetch_assoc($subCategoryFormView)) {
+        $subCategoryNames[] = $subCategoryName['subCategory'];
+    }
+}
 ?>
 <div class="flex">  
     <?php include('dashboard-sidebar.php'); ?>
@@ -52,6 +66,7 @@ $blog_view = blog_view();
                                             <th scope="col" class="px-2 py-1.5 text-start text-sm font-medium text-white uppercase ">SL</th>
                                             <th scope="col" class="px-2 py-1.5 text-start text-sm font-medium text-white uppercase ">Posts</th>
                                             <th scope="col" class="px-2 py-1.5 text-start text-sm font-medium text-white uppercase ">Categories</th>
+                                            <th scope="col" class="px-2 py-1.5 text-start text-sm font-medium text-white uppercase ">Sub Categories</th>
                                             <th scope="col" class="px-2 py-1.5 text-start text-sm font-medium text-white uppercase ">Action</th>
                                         </tr>
                                     </thead>
@@ -67,20 +82,72 @@ $blog_view = blog_view();
                                                         $words = explode(' ', $roomData);
 
                                                         // Keep the first 25 words (adjust the number of words as per your need)
-                                                        $limitedText = implode(' ', array_slice($words, 0, 20)) . '...';
+                                                        $limitedText = implode(' ', array_slice($words, 0, 10)) . '...';
 
                                             ?>
                                             <tr class="border border-cyan-950">
                                                 <td class="px-2 py-1.5 whitespace-nowrap text-sm font-medium text-black"><?php echo $i++;?></td>
                                                 <td class="px-2 py-1.5 whitespace-nowrap text-sm font-medium text-black"><?php echo  $limitedText;?></td>
                                                 <td class="px-2 py-1.5 whitespace-nowrap text-sm font-medium text-black"><?php echo  $row['blogCategory'];?></td>
+                                                <td class="px-2 py-1.5 whitespace-nowrap text-sm font-medium text-black"><?php echo  $row['blogSubCategory'];?></td>
                                                 <td class="px-2 py-1.5 whitespace-nowrap text-end text-sm font-medium inline-flex gap-x-2">
                                                     <button class="" onclick="document.getElementById('blog-<?php echo $row['id']; ?>').showModal()">
                                                         <i class="fa-regular fa-pen-to-square text-blue-600 "></i>
                                                     </button>
                                                     <dialog id="blog-<?php echo $row['id']; ?>" class="modal">
                                                         <div class="modal-box w-11/12 max-w-5xl text-start">
-                                                            <form method="post" class="w-full" enctype="multipart/form-data">
+                                                        <form method="post" class="w-full" enctype="multipart/form-data">
+                                                                <div>
+                                                                    <div class=" flex justify-start items-center outline outline-1 ouline-black rounded">
+                                                                        <label for="updateBlogCategory" class="text-black w-60   ps-4  font-serif">Update Category: </label>
+                                                                        <select name="updateBlogCategory"  class=" py-px bg-transparent w-full ps-2 focus:outline-none">
+                                                                            <option disabled selected>Select Category Name</option>
+                                                                            <?php 
+                                                                                foreach ($category_names as $category_name) {
+                                                                                    $selected = '';
+                                                                                    if (isset($old['updateBlogCategory']) && $old['updateBlogCategory'] == $category_name) {
+                                                                                        $selected = 'selected';
+                                                                                    } elseif (isset($row['blogCategory']) && $row['blogCategory'] == $category_name) {
+                                                                                        $selected = 'selected';
+                                                                                    }
+                                                                            ?>
+                                                                                <option value="<?php echo htmlspecialchars($category_name); ?>" 
+                                                                                    <?php echo $selected; ?> class="bg-cyan-950 text-white ">
+                                                                                    <?php echo htmlspecialchars($category_name); ?>
+                                                                                </option>    
+                                                                            <?php
+                                                                                }
+                                                                            ?>
+                                                                        </select>
+                                                                    </div>
+                                                                    <h5 class="text-red-600 pt-1 font-mono font-xl"><?php echo $error['updateBlogCategory'] ?? ''; ?></h5>
+                                                                </div>
+                                                                <div class="mt-3">
+                                                                    <div class=" flex justify-start items-center outline outline-1 ouline-black rounded">
+                                                                        <label for="updateBlogSubCategory" class="text-black w-60   ps-4  font-serif">Update Sub Category: </label>
+                                                                        <select name="updateBlogSubCategory"  class=" py-px bg-transparent w-full ps-2 focus:outline-none">
+                                                                            <option disabled selected>Select Sub Category Name</option>
+                                                                            <?php 
+                                                                                foreach ($subCategoryNames as $subCategoryName) {
+                                                                                    $selected = '';
+                                                                                    if (isset($old['updateBlogSubCategory']) && $old['updateBlogSubCategory'] == $subCategoryName) {
+                                                                                        $selected = 'selected';
+                                                                                    } elseif (isset($row['blogSubCategory']) && $row['blogSubCategory'] == $subCategoryName) {
+                                                                                        $selected = 'selected';
+                                                                                    }
+                                                                            ?>
+                                                                                <option value="<?php echo htmlspecialchars($subCategoryName); ?>" 
+                                                                                    <?php echo $selected; ?> class="bg-cyan-950 text-white ">
+                                                                                    <?php echo htmlspecialchars($subCategoryName); ?>
+                                                                                </option>    
+                                                                            <?php
+                                                                                }
+                                                                            ?>
+                                                                        </select>
+                                                                    </div>
+                                                                    <h5 class="text-red-600 pt-1 font-mono font-xl"><?php echo $error['updateBlogSubCategory'] ?? ''; ?></h5>
+                                                                </div>
+                                                            
                                                                 <input type="hidden" value="<?php echo $row['id']; ?>" name="update_id">
                                                                 <div class="mt-6 gap-x-4 flex flex-col justify-center items-center">
                                                                         <div class="flex justify-start items-center outline outline-1 outline-black rounded w-full">
@@ -96,7 +163,6 @@ $blog_view = blog_view();
                                                                 </div>
                                                                 <h5 class="text-black font-mono font-xl my-2 text-center"><?php echo $error['updateBlog'] ?? ''; ?></h5>
                                                             </form>
-                                                            
                                                         </div>
                                                     </dialog>
                                                     <form action="" method="post" onsubmit="return confirm('Do you want to delete?')">

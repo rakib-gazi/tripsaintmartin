@@ -166,3 +166,169 @@
 			];
 		
 	}
+    function subCategory(){
+        $db_connect = db_connect();
+        $category = mysqli_real_escape_string($db_connect,$_POST['subCategory']);
+		$img_name = $_FILES['subImage']['name'];
+		$img_size = $_FILES['subImage']['size'];
+		$img_tmp = $_FILES['subImage']['tmp_name'];
+
+
+        $error = [];
+        if(empty($category)){
+            $error['subCategory'] = 'Sub Category is empty';
+        }else{
+            $sql_view = "SELECT * FROM subcategories WHERE subCategory = '$category' " ;
+			$results = mysqli_query($db_connect, $sql_view);
+				if(mysqli_num_rows($results) == 1){
+					$error['subCategory'] = 'Sub Category Already Exists';
+				}
+        }
+		if($img_tmp){
+			if( $img_size >5242880 ){
+			$error['subImage'] = 'Max Size 5 MB';
+			}
+			$targeted_extensions = ['jpg','jpeg','png','gif','webp'];
+			$getExtension = strtolower (pathinfo($img_name, PATHINFO_EXTENSION));
+			if(!in_array($getExtension,$targeted_extensions)){
+				$error['subImage'] = 'jpg/jpeg/png/gig/webp File Required';
+			}
+		}
+        
+        if(count($error)> 0){
+            return [
+				'status' => 'error',
+				'message' => $error,
+			 ];
+        }
+		$location = 'images/subcategories';
+        if(!file_exists('../'.$location)){
+            mkdir('../'.$location,  permissions: 0777, recursive: true);
+        }
+        if($img_tmp){
+            $path = $location . '/' . $img_name;
+            move_uploaded_file($img_tmp, '../' . $path);
+        }
+
+        $sql_insert = "INSERT INTO subcategories(subImage,subCategory) VALUES ('$path','$category')";
+        $result =  mysqli_query ($db_connect,$sql_insert);
+        
+        if(mysqli_error($db_connect)){
+            die('Table Error:'.mysqli_error($db_connect));
+        }
+        return [
+            'status' => 'success',
+            'message' => 'Sub Categories added successfully',
+        ];
+    }
+    function subCategoryView() {
+        $db_connect = db_connect();
+        $sql_view = "SELECT * FROM subcategories ";
+        $category_view_results = mysqli_query($db_connect, $sql_view);
+        return $category_view_results;
+    }
+	function updateSubCategory(){
+		$db_connect = db_connect();
+		$update_id = $_POST['update_id'];
+		$updateCategory = mysqli_real_escape_string($db_connect,$_POST['updateSubCategory']);
+		$UpdateProfile_img_name = $_FILES['updateSubImage']['name'];
+		$UpdateProfile_img_size = $_FILES['updateSubImage']['size'];
+		$UpdateProfile_img_tmp = $_FILES['updateSubImage']['tmp_name'];
+		
+		$error=[];
+		if(empty($updateCategory) ){
+			  $error['updateSubCategory'] = 'Sub Category is Required';
+		}
+		if ($UpdateProfile_img_tmp) {
+			if ($UpdateProfile_img_size > 5242880) {
+				$error['updateSubImage'] = 'Max Size 5 MB';
+			}
+			$targeted_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+			$getExtension = strtolower(pathinfo($UpdateProfile_img_name, PATHINFO_EXTENSION));
+			if (!in_array($getExtension, $targeted_extensions)) {
+				$error['updateSubImage'] = 'jpg/jpeg/png/gif/webp File Required';
+			}
+		}
+		if(count($error)> 0){
+            return [
+				'status' => 'error',
+				'message' => $error,
+			 ];
+        }
+		$location = 'images/subcategories';
+        if(!file_exists('../'.$location)){
+            mkdir('../'.$location,  permissions: 0777, recursive: true);
+        }
+		if ($UpdateProfile_img_tmp) {
+			// Get the old image path from the database
+			$sql_select = "SELECT subImage FROM subcategories WHERE id = '$update_id'";
+			$result_select = mysqli_query($db_connect, $sql_select);
+			if ($result_select && mysqli_num_rows($result_select) > 0) {
+				$row = mysqli_fetch_assoc($result_select);
+				$old_image_path = '../' . $row['subImage'];
+	
+				// Check if the old image exists, if so delete it
+				if (file_exists($old_image_path)) {
+					unlink($old_image_path); // Deletes the old image
+				}
+			}
+	
+			// Upload the new image
+			$path = $location . '/' . $UpdateProfile_img_name;
+			move_uploaded_file($UpdateProfile_img_tmp, '../' . $path);
+		}
+			
+			$sql_update = "UPDATE subcategories set subCategory='$updateCategory'";
+			if (isset($path)) {
+				$sql_update .= ", subImage='$path'";
+			}
+		
+			$sql_update .= " WHERE id='$update_id'";
+			$result =  mysqli_query ($db_connect,$sql_update);
+			
+			if(mysqli_error($db_connect)){
+				die('Table Error:'.mysqli_error($db_connect));
+			}
+			return[
+				'status' => 'update_success',
+				'message' => 'Sub Category successfully Updated',
+			];
+	}
+     
+	function subCategoryFormView() {
+		$db_connect = db_connect();
+        $sql_view = "SELECT * FROM subcategories ";
+        $category_view_results = mysqli_query($db_connect, $sql_view);
+        return $category_view_results;
+	}
+	
+    function SubCategoryDelete(){
+		$db_connect = db_connect();
+		$id = $_POST['delete_id'];
+		
+		$error=[];
+		$sql_view = "SELECT * FROM subcategories WHERE id='$id'";
+		$result = mysqli_query($db_connect, $sql_view);
+		if(mysqli_num_rows($result) == 0){
+			$error['data_delete'] = 'Unknown ID';
+		}
+		
+		if(count($error) > 0){
+			return [
+				'status' => 'error',
+				'message' => $error,
+			 ];
+		}
+		$sql_delete = "DELETE FROM subcategories WHERE id='$id'";
+		$result = mysqli_query($db_connect, $sql_delete);
+			
+			if(mysqli_error($db_connect)){
+				die('Table Error:'.mysqli_error($db_connect));
+			}
+			
+			return [
+				'status' => 'success',
+				'message' => ' Sub Category Deleted Successfull.',
+			];
+		
+	}

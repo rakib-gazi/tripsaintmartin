@@ -1,11 +1,8 @@
 <!-- Sidebar -->
  <?php 
-    $currentMonth = date('F'); 
-    $reservationItem = $currentMonth . " Reservations";
-    
-    $items = ['Dashboard','Categories', $reservationItem,'All Reservations','Hotel Invoice','Bank Invoice','Profile','Blog Posts'];
-    $icons = ['fa-solid fa-list-ul','fa-solid fa-calendar-plus','fa-solid fa-clock','fa-solid fa-calendar-check','fa-solid fa-building-circle-arrow-right','fa-solid fa-pencil-alt','fa-regular fa-user','fa-solid fa-gear'];
-    $links = ['dashboard','categories','current_reservation','all_reservation','hotelInvoice','bank_invoice','profile','blog'];
+    $items = ['Dashboard','Categories', 'Sub Categories','Photos','Blog Posts','Profile'];
+    $icons = ['fa-solid fa-list-ul','fa-solid fa-calendar-plus','fa-solid fa-clock','fa-solid fa-calendar-check','fa-solid fa-building-circle-arrow-right','fa-solid fa-pencil-alt'];
+    $links = ['dashboard','categories','subcategories','photos','blog','profile'];
  ?>
 <div class="w-1/6 bg-slate-800 h-screen p-4 text-white  pt-20 sticky top-0 font-nunito">
     <ul class="ms-4">

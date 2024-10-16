@@ -1,9 +1,9 @@
 <?php 
     include('dashboard-header.php');
     include('../function/dashboard_authentication.php');
-    $lifetime_reservaton_data = lifetime_reservaton();
-    $currentMonth = date('F'); 
-    $reservationmonth = $currentMonth . " Reservations";
+    // $lifetime_reservaton_data = lifetime_reservaton();
+    // $currentMonth = date('F'); 
+    // $reservationmonth = $currentMonth . " Reservations";
 ?>
     <!-- Sidebar and Content -->
     <div class="flex">
@@ -17,15 +17,11 @@
                     <div class="bg-white p-6 rounded shadow-md">
                         <h2 class="text-xl font-semibold mb-2">Lifetime Reservations</h2>
                         <p class="text-gray-700">
-                            <?php 
-                                if($row = mysqli_fetch_assoc($lifetime_reservaton_data)){
-                                    echo  $row['total'];
-                                }
-                            ?>
+                            
                         </p>
                     </div>
                     <div class="bg-white p-6 rounded shadow-md">
-                        <h2 class="text-xl font-semibold mb-2"><?php echo $reservationmonth;?></h2>
+                        <h2 class="text-xl font-semibold mb-2">></h2>
                         <p class="text-gray-700">567</p>
                     </div>
                     <div class="bg-white p-6 rounded shadow-md">

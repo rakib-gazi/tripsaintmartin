@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tiny.cloud/1/3ospo072d01oilxs1q5thzsjz4zlxh12kmwto54m8awth4jm/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '#blogPostContent',  // Target the textarea by its ID
+        plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+        toolbar_mode: 'floating',
+      });
+    </script>
+</head>
+<body>
+    <form method="POST" action="your_blog_post_processor.php">
+        <textarea id="blogPostContent" name="content"></textarea>
+        <input type="submit" name="submit" value="Publish">
+    </form>
+    
+    <!-- Include TinyMCE via CDN -->
+
+
+</body>
+</html>

@@ -33,4 +33,6 @@
             }
           }
         </script>
+        <script src="https://cdn.tiny.cloud/1/3ospo072d01oilxs1q5thzsjz4zlxh12kmwto54m8awth4jm/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
 </head>

@@ -5,29 +5,23 @@
     
     <nav id="top" >
       <div id="header" class="px-6 xl:px-0 fixed top-0 z-30  bg-transparent w-full">
-        <div id="text-color" class="container flex justify-between items-center py-4 text-white">
-          <!-- Left part -->
-          <div class=" text-lg">
-            <a href="#" class="font-bold  text-xl lg:text-3xl font-nunito">Trip Saint Martin</a>
-          </div>
-    
-          <!-- Center part -->
-          <div class="hidden md:flex space-x-4 text-xl  font-semibold">
-            <a href="#" class="font-siliguri">সেন্টমার্টিন দ্বীপ</a>
-            <a href="#" class="font-siliguri">ব্লগ</a>
-            <a href="#" class="font-siliguri">ট্রিপ প্লান</a>
-            <a href="#" class="font-siliguri">বুকিং রিসোর্স</a>
-            <a href="#" class="font-siliguri">ছবি গ্যালারি</a>
-          </div>
-    
-          <!-- Right part -->
-          <div>
-            <a href="#" class="text-xl  font-semibold hidden md:block">Login</a>
-            <button id="nav-open" class="block md:hidden"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
-            </svg>
-            </button>
-          </div>
+          <div id="text-color" class="container flex justify-between items-center py-4 text-white">
+            <div class=" text-lg">
+              <a href="#" class="font-bold  text-xl lg:text-3xl font-nunito">Trip Saint Martin</a>
+            </div>
+            <div >
+              <div class="hidden md:flex space-x-4 text-xl  font-semibold">
+                <a href="#" class="font-siliguri">সেন্টমার্টিন দ্বীপ</a>
+                <a href="#" class="font-siliguri">ব্লগ</a>
+                <a href="#" class="font-siliguri">ট্রিপ প্লান</a>
+                <a href="#" class="font-siliguri">বুকিং রিসোর্স</a>
+                <a href="#" class="font-siliguri">ছবি গ্যালারি</a>
+              </div>
+              <button id="nav-open" class="block md:hidden"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+                  </svg>
+                </button>
+            </div>
           </div>
       </div>
     </nav>
@@ -57,7 +51,7 @@
           <div class="  container hero min-h-screen">
             <div class="hero-content text-center ">
               <div class="">
-                <h1 class="text-xl lg:text-5xl font-bold font-siliguri text-white mt-16 lg:mt-0"> ঘুরে আসুন সেন্টমার্টিনে ট্রিপ সেন্টমার্টিনের সাথে</h1>
+                <h1 class="text-xl lg:text-5xl font-bold font-siliguri text-white mt-16 lg:mt-0">সেন্টমার্টিন বাংলাদেশের একমাত্র প্রবাল দ্বীপ, চলুন ঘুরে আসি।</h1>
                 <p class="py-6 font-bangla text-white text-base lg:text-xl ">
                   হিজবুল্লাহ একের পর এক ধাক্কা খেয়েছে, খাচ্ছে। সংগঠনের কমান্ড কাঠামো ছেঁটে ফেলা হয়েছে। হিজবুল্লাহর ডজনের বেশি শীর্ষ কমান্ডারকে হত্যা করা হয়েছে। পেজার আর ওয়াকিটকির বিস্ফোরণের মাধ্যমে হিজবুল্লাহর যোগাযোগব্যবস্থা ধ্বংস করা হয়েছে। একের পর এক বিমান হামলায় চালিয়ে সংগঠনটির অনেক অস্ত্র ধ্বংস করা হয়েছে।
 
