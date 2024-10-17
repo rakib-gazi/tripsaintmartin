@@ -8,6 +8,9 @@
                 'id' => $row['id'],
                 'category' => $row['blogCategory'],
                 'pic' => $row['categoryImage'],
+                'subCategory' => $row['blogSubCategory'],
+                
+                
             ];
         }
        
@@ -26,7 +29,7 @@
               </a>
               <?php
                     foreach($categories as $data){?>
-                        <a href="blogSubCategory.php?id=<?php echo $data['id']; ?>"  class="relative overflow-hidden group">
+                        <a href="<?php echo $data['subCategory'] ? 'blogSubCategory.php' : 'blogDetails.php'; ?>?id=<?php echo $data['id']; ?>"  class="relative overflow-hidden group">
                             <img src="<?php echo $data['pic'];?>" alt="How to Save For a Trip" class="w-full h-full object-cover rounded-lg  transform transition-transform duration-500 group-hover:scale-110">
                             <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
                                 <h2 class="text-white text-2xl font-semibold px-4"><?php echo $data['category'];?></h2>

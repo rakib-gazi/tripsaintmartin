@@ -104,51 +104,116 @@ if (mysqli_num_rows($subCategoryFormView) > 0) {
                     <input type="hidden" name="subCategoryImage" id="subCategoryImage" value="">
                     <h5 class="text-red-600 pt-1 font-mono font-xl"><?php echo $error['blogSubCategory'] ?? ''; ?></h5>
                 </div>
-                <div class="mt-6 gap-x-4 flex flex-col justify-center items-center gap-6">
-                        <div class="flex justify-start items-center outline outline-1 outline-black rounded-md w-full">
-                            <textarea id="blogPostContent" name="blogPost"   placeholder="Enter blog post" class="w-full min-h-[600px] p-4 font-siliguri text-xl"><?php echo $old['blogPost'] ?? ''; ?></textarea>
+                <div class="mt-2 outline outline-1 ouline-black rounded p-4 flex flex-col gap-2" id='blogContainer'>
+                    <div>
+                        <div class=" flex justify-start items-center outline outline-1 ouline-black rounded">
+                            <label for="mainTitle" class="text-black w-auto ps-4  font-serif">Main Title : </label>
+                            <input type="text" name="mainTitle" value="<?php echo $old['mainTitle'] ?? ''; ?>" placeholder=" Enter main title" 
+                            class=" py-px bg-transparent w-auto ps-2 focus:outline-none">
                         </div>
+                        <h5 class="text-red-600 pt-1 font-mono font-xl"><?php echo $error['mainTitle'] ?? ''; ?></h5>
+                    </div>
+                    <div class="outline outline-1 ouline-black rounded p-4 flex flex-col gap-2">
+                        <div class=" flex justify-start items-center outline outline-1 ouline-black rounded">
+                            <textarea name="paragraph"  class=" py-px bg-transparent w-full h-32 ps-2 focus:outline-none"><?php echo $old['paragraph'] ?? ''; ?></textarea>
+                        </div>
+                        <div class="w-full outline outline-1 outline-black rounded my-4">
+                            <input type="file" name="image" 
+                                class="py-2 bg-transparent w-92 px-4 focus:outline-none w-full" >
+                        </div>
+                    </div>
+                    <div class="mt-2 outline outline-1 ouline-black rounded p-4 flex flex-col gap-2">
+                        <div class=" flex justify-start items-center outline outline-1 ouline-black rounded">
+                                <label for="subTitle_1" class="text-black w-auto ps-4  font-serif">Sub Title : </label>
+                                <input type="text" name="subTitle_1" value="<?php echo $old['subTitle_1'] ?? ''; ?>" placeholder=" Enter Sub title" 
+                                class=" py-px bg-transparent w-auto ps-2 focus:outline-none">
+                            </div>
+                            <div class=" flex justify-start items-center outline outline-1 ouline-black rounded">
+                                <textarea name="paragraph_1"  class=" py-px bg-transparent w-full h-32 ps-2 focus:outline-none"><?php echo $old['paragraph_1'] ?? ''; ?></textarea>
+                            </div>
+                            <div class="w-full outline outline-1 outline-black rounded my-4">
+                                <input type="file" name="subImage_1" 
+                                    class="py-2 bg-transparent w-92 px-4 focus:outline-none w-full" >
+                            </div>
+                        </div>
+                </div>
+                <div class="mt-6 gap-x-4 flex  justify-center items-center gap-6">
                     <button type="submit" name="blogPost_submit" class="bg-cyan-950 hover:bg-slate-800 text-white transition duration-700 ease-in-out font-serif text-lg font-semibold px-8 py-1.5 rounded outline outline-1 outline-black">Submit</button>
+                    <button  id="addSection" class="bg-cyan-950 hover:bg-slate-800 text-white transition duration-700 ease-in-out font-serif text-lg font-semibold px-8 py-1.5 rounded outline outline-1 outline-black">Add Section</button>
+                    
                 </div>
                 <h5 class="text-black font-mono font-xl my-2 text-center"><?php echo $error['blogPost'] ?? ''; ?></h5>
             </form>
     </div>
 </div>
-<script>
-    function updateCategoryImage() {
-        var selectElement = document.getElementById("blogCategory");
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var selectedImage = selectedOption.getAttribute("data-image");
+    <script>
+        function updateCategoryImage() {
+            var selectElement = document.getElementById("blogCategory");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            var selectedImage = selectedOption.getAttribute("data-image");
 
-        // Update the hidden input with the selected image
-        document.getElementById("categoryImage").value = selectedImage;
-    }
-    function updateSubCategoryImage() {
-        var selectElement = document.getElementById("blogSubCategory");
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var selectedImage = selectedOption.getAttribute("data-image");
+            // Update the hidden input with the selected image
+            document.getElementById("categoryImage").value = selectedImage;
+        }
+        function updateSubCategoryImage() {
+            var selectElement = document.getElementById("blogSubCategory");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            var selectedImage = selectedOption.getAttribute("data-image");
 
-        // Update the hidden input with the selected image
-        document.getElementById("subCategoryImage").value = selectedImage;
-    }
-</script>
-<script>
-  tinymce.init({
-    selector: '#blogPostContent',  // Updated to target your blogPost textarea
-    plugins: [
-      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-      'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
-    ],
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-    tinycomments_mode: 'embedded',
-    tinycomments_author: 'Author name',
-    mergetags_list: [
-      { value: 'First.Name', title: 'First Name' },
-      { value: 'Email', title: 'Email' },
-    ],
-    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-  });
-</script>
+            // Update the hidden input with the selected image
+            document.getElementById("subCategoryImage").value = selectedImage;
+        }
+    </script>
+    <script>
+        let paragraphCounter = 2;
+
+        // PHP array passed to JavaScript
+        const oldSubtitles = [
+            <?php
+                // Loop through PHP subtitles array (assuming $old['subtitle'] is an array with subtitles)
+                for ($i = 2; $i <= 11; $i++) {
+                    echo '"' . ($old["subtitle-$i"] ?? '') . '",';
+                }
+            ?>
+        ];
+
+        document.getElementById('addSection').addEventListener('click', (e) => {
+            e.preventDefault();
+
+            if (paragraphCounter <= 11) {
+                const blogContainer = document.getElementById('blogContainer');
+                const sectionDiv = document.createElement('div');
+                sectionDiv.classList = "mt-2 outline outline-1 outline-black rounded p-4 flex flex-col gap-2";
+
+                // Get the corresponding subtitle from the array
+                let subtitleValue = oldSubtitles[paragraphCounter - 1] || ''; // Access the current subtitle
+
+                // Create dynamic content for each section
+                sectionDiv.innerHTML = `
+                    <div class="flex justify-start items-center outline outline-1 outline-black rounded">
+                        <label for="subTitle-${paragraphCounter}" class="text-black w-auto ps-4 font-serif">Sub Title:</label>
+                        <input type="text" name="subTitle-${paragraphCounter}" value="${subtitleValue}" 
+                            placeholder="Enter sub title ${paragraphCounter}" class="py-px bg-transparent w-auto ps-2 focus:outline-none">
+                    </div>
+                    <div class="flex justify-start items-center outline outline-1 outline-black rounded">
+                        <textarea name="paragraph-${paragraphCounter}" class="text-black py-px bg-transparent w-full h-32 ps-2 focus:outline-none" placeholder="Enter paragraph ${paragraphCounter}">
+                            ${subtitleValue}
+                        </textarea>
+                    </div>
+                    <div class="w-full outline outline-1 outline-black rounded my-4">
+                        <input type="file" name="image-${paragraphCounter}" 
+                            class="py-2 bg-transparent w-92 px-4 focus:outline-none w-full">
+                    </div>
+                `;
+
+                // Append the new section to the blog container
+                blogContainer.appendChild(sectionDiv);
+
+                // Increment the counter for the next click
+                paragraphCounter++;
+            }
+        });
+    </script>
 
     </body>
 </html>
