@@ -31,6 +31,18 @@
             document.getElementById("categoryImage").value = selectedImage;
         }
     </script>
+    <script>
+    function updateCategoryId(selectElement) {
+        const selectedCategory = selectElement.value; // Get the selected category name
+        const categoryIdInput = document.getElementById('categoryId');
+
+        // Find the category ID based on the selected category name
+        const categoryNames = <?php echo json_encode($category_names); ?>;
+        const selectedCategoryId = categoryNames.find(category => category.category === selectedCategory)?.id || '';
+
+        categoryIdInput.value = selectedCategoryId; // Set the value of the hidden input to the selected category ID
+    }
+</script>
 
     </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-    include "function/blog_auth.php";
+    require_once("function/blog_auth.php") ;
     $categoryData = blog_view();
     $categories = [];
     if(mysqli_num_rows($categoryData)>0){
@@ -9,7 +9,7 @@
                 'category' => $row['blogCategory'],
                 'pic' => $row['categoryImage'],
                 'subCategory' => $row['blogSubCategory'],
-                'blogPost' => $row['blogPost'],
+                'paragraph' => $row['paragraph'],
                 
             ];
         }
@@ -27,7 +27,7 @@
                     <div class="font-bold text-xl mb-2 text-black"><?php echo $data['category'];?></div>
                     <p class="text-gray-700 text-base font-bangla">
                       <?php 
-                        $words = explode(' ', $data['blogPost']);
+                        $words = explode(' ', $data['paragraph']);
                         $shortPost = implode(' ', array_slice($words, 0, 20));
                         echo $shortPost . '...'; 
                     ?>

@@ -64,7 +64,7 @@ if (mysqli_num_rows($subCategoryFormView) > 0) {
                                     <thead class="bg-cyan-950">
                                         <tr>
                                             <th scope="col" class="px-2 py-1.5 text-start text-sm font-medium text-white uppercase ">SL</th>
-                                            <th scope="col" class="px-2 py-1.5 text-start text-sm font-medium text-white uppercase ">Posts</th>
+                                            <th scope="col" class="px-2 py-1.5 text-start text-sm font-medium text-white uppercase ">Posts Title</th>
                                             <th scope="col" class="px-2 py-1.5 text-start text-sm font-medium text-white uppercase ">Categories</th>
                                             <th scope="col" class="px-2 py-1.5 text-start text-sm font-medium text-white uppercase ">Sub Categories</th>
                                             <th scope="col" class="px-2 py-1.5 text-start text-sm font-medium text-white uppercase ">Action</th>
@@ -76,7 +76,7 @@ if (mysqli_num_rows($subCategoryFormView) > 0) {
                                                 if (mysqli_num_rows($blog_view) > 0) {
                                                     $i =  1;
                                                     while ($row = mysqli_fetch_assoc($blog_view)) {
-                                                        $roomData = $row['blogPost'];
+                                                        $roomData = $row['mainTitle'];
 
                                                         // Split the text into an array of words
                                                         $words = explode(' ', $roomData);
@@ -96,7 +96,7 @@ if (mysqli_num_rows($subCategoryFormView) > 0) {
                                                     </button>
                                                     <dialog id="blog-<?php echo $row['id']; ?>" class="modal">
                                                         <div class="modal-box w-11/12 max-w-5xl text-start">
-                                                        <form method="post" class="w-full" enctype="multipart/form-data">
+                                                            <form method="post" class="w-full" enctype="multipart/form-data">
                                                                 <div>
                                                                     <div class=" flex justify-start items-center outline outline-1 ouline-black rounded">
                                                                         <label for="updateBlogCategory" class="text-black w-60   ps-4  font-serif">Update Category: </label>
@@ -147,13 +147,56 @@ if (mysqli_num_rows($subCategoryFormView) > 0) {
                                                                     </div>
                                                                     <h5 class="text-red-600 pt-1 font-mono font-xl"><?php echo $error['updateBlogSubCategory'] ?? ''; ?></h5>
                                                                 </div>
-                                                            
                                                                 <input type="hidden" value="<?php echo $row['id']; ?>" name="update_id">
-                                                                <div class="mt-6 gap-x-4 flex flex-col justify-center items-center">
-                                                                        <div class="flex justify-start items-center outline outline-1 outline-black rounded w-full">
-                                                                            <textarea type="text" name="updateBlog"  placeholder="Update blog post" class="w-full min-h-[600px] p-4 font-siliguri text-xl"><?php echo $old['blogPost'] ??  $row['blogPost'] ?? ''; ?></textarea>
-                                                                           
+                                                                <div class="mt-2 outline outline-1 ouline-black rounded p-4 flex flex-col gap-2">
+                                                                    <div>
+                                                                        <div class="flex justify-start items-center outline outline-1 ouline-black rounded">
+                                                                            <label for="updateMainTitle" class="text-black w-40 ps-4 font-serif">Update Main Title : </label>
+                                                                            <input type="text" name="updateMainTitle" value="<?php echo $old['updateMainTitle'] ?? $row['mainTitle']?? ''; ?>" placeholder=" Enter main title" 
+                                                                            class="py-px bg-transparent w-full ps-2 focus:outline-none">
                                                                         </div>
+                                                                        <h5 class="text-red-600 pt-1 font-mono font-xl"><?php echo $error['updateMainTitle'] ?? ''; ?></h5>
+                                                                    </div>
+                                                                    <div class="outline outline-1 ouline-black rounded p-4 flex flex-col gap-2">
+                                                                        <div class="flex justify-start items-center outline outline-1 outline-black rounded">
+                                                                            <textarea name="updateMainParagraph" class="py-px bg-transparent w-full h-32 ps-2 focus:outline-none"><?php echo $old['updateMainParagraph'] ?? $row['paragraph'] ?? ''; ?></textarea>
+                                                                        </div>
+
+                                                                        <div class="w-full outline outline-1 outline-black rounded my-4">
+                                                                            <!-- Image input field -->
+                                                                            <input type="file" name="updateImage" class="py-2 bg-transparent w-92 px-4 focus:outline-none w-full">
+                                                                            <?php if (!empty($row['image'])): ?>
+                                                                                <div class="mt-2">
+                                                                                    <p class="text-xl p-2">Current Image:</p>
+                                                                                    <img src="../images/blogImage/<?php echo $row['image']; ?>" alt="Current Image" class="h-32 w-32 object-cover p-2">
+                                                                                </div>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php
+                                                                        for($i=1; $i<=10; $i++){?>
+                                                                            <div  class="mt-2 outline outline-1 outline-black rounded p-4 flex flex-col gap-2 font-nunito">
+                                                                                <div class="flex justify-start items-center outline outline-1 outline-black rounded">
+                                                                                    <label for="updateSubTitle-<?php echo $i ;?>" class="text-black w-40 ps-4 "> Update Sub Title <?php echo $i ;?> : </label>
+                                                                                    <input type="text" name="updateSubTitle_<?php echo $i ;?>" placeholder="Update sub title <?php echo $i ;?>" 
+                                                                                    class="py-px bg-transparent w-full ps-2 focus:outline-none" value="<?php echo $old['updateSubTitle_' . $i] ?? $row['subitile_' . $i] ?? ''; ?>">
+                                                                                </div>
+                                                                                <div class="flex justify-start items-center outline outline-1 outline-black rounded">
+                                                                                    <textarea name="updateParagraph_<?php echo $i; ?>" placeholder="Update paragraph <?php echo $i; ?>" class="py-px bg-transparent w-full h-32 ps-2 focus:outline-none"><?php echo $old['updateParagraph_' . $i] ?? $row['paragraph_' . $i] ?? ''; ?></textarea>
+                                                                                </div>
+                                                                                <div class="w-full outline outline-1 outline-black rounded my-4">
+                                                                                    <!-- Image input field -->
+                                                                                    <input type="file" name="updateImage_<?php echo $i ;?>" class="py-2 bg-transparent w-92 px-4 focus:outline-none w-full">
+                                                                                    <?php if (!empty($row['image_' . $i] )): ?>
+                                                                                        <div class="mt-2">
+                                                                                            <p class="text-xl p-2">Current Image <?php echo $i;?>:</p>
+                                                                                            <img src="../images/blogImage/<?php echo $row['image_' . $i]; ?>" alt="Current Image" class="h-32 w-32 object-cover p-2">
+                                                                                        </div>
+                                                                                    <?php endif; ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        <?php }
+                                                                    ?>    
                                                                 </div>
                                                                 <div class="modal-action flex justify-center items-center">
                                                                     <button type="submit" name="updateBlogSubmit" class="bg-cyan-950 hover:bg-slate-800 text-white transition duration-700 ease-in-out font-serif text-lg font-semibold px-8 py-1.5 rounded outline outline-1 outline-black">Submit</button>

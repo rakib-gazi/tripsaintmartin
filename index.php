@@ -67,7 +67,6 @@
     <?php include 'mainCategory.php'?>
     <?php include 'popularPosts.php'?>
     </main>
-    <?php include 'popularPosts.php'?>
     <a href="#top" class="flex justify-center items-center rounded-full shadow-xl border  bg-white md:p-4 p-2 fixed bottom-8 md:right-6 right-2 z-50">
       <img src="images/top.gif" alt="" class="h-7">              
     </a>

@@ -1,6 +1,7 @@
 <?php 
      include "baseurl.php";
      include "function/blog_auth.php";
+     include "function/pages_auth.php";
       if (isset($_GET['id'])) {
           $id = $_GET['id'];
           $blogSubCategoryData = blogSubCategoryview($id);
@@ -12,11 +13,39 @@
           while($row = mysqli_fetch_assoc($blogSubCategoryData)){
               $subCategories[]  =[
                   'id' => $row['id'],
+                  'blogCategory' => $row['blogCategory'],
                   'blogSubCategory' => $row['blogSubCategory'],
                   'subCategoryImage' => $row['subCategoryImage'],
               ];
           }
          
+      }
+      $subCategoryMainPageViewData = subCategoryMainPageView();
+      $subCategoriesPages = [];
+      if (mysqli_num_rows($subCategoryMainPageViewData) > 0) {
+          while ($row = mysqli_fetch_assoc($subCategoryMainPageViewData)) {
+              $subCategoriesPages[] = [
+                  'category' => trim($row['category']),  // Trim whitespace
+                  'mainTitle' => $row['mainTitle'],
+                  'image' => $row['image'],
+                  'mainParagraph' => $row['mainParagraph'], // Fixed key
+                  'mainTitle2' => $row['mainTitle2'],
+              ];
+          }
+      }
+
+      $matchedCategories = [];
+      foreach ($subCategories as $subCategory) {
+          foreach ($subCategoriesPages as $subCategoryPage) {
+              if ($subCategory['blogCategory'] === $subCategoryPage['category']) {
+                  $matchedCategories[] = [
+                      'mainTitle' => $subCategoryPage['mainTitle'], // Use subCategoryPage
+                      'image' => $subCategoryPage['image'],
+                      'mainParagraph' => $subCategoryPage['mainParagraph'], // Use subCategoryPage
+                      'mainTitle2' => $subCategoryPage['mainTitle2'],
+                  ];
+              }
+          }
       }
 
 ?>
@@ -26,29 +55,24 @@
     <?php include 'head.php' ?>
   <body class="relative">
     
-  <?php include 'header.php' ?>
-
+  <?php include 'header.php' ;
+  if(!empty($matchedCategories)) {
+    $firstMatch = $matchedCategories[0];?>
     <header class="">
-        <section class=" ">
           <div class="  container pt-32 px-4">
             <div class="text-center ">
-                <h1 class="text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold font-siliguri  lg:mt-0"> ঘুরে আসুন সেন্টমার্টিনে ট্রিপ সেন্টমার্টিনের সাথে</h1>
+                <h1 class="text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold font-siliguri  lg:mt-0"> <?php echo $firstMatch['mainTitle']?></h1>
                 <div>
-                  <img src="images/martin.jpeg" alt="" class="w-full h-[200px] md:h-[350px] lg:h-[450px] xl:h-[550px] my-4 md:my-8 rounded-3xl shadow-lg">
+                  <img src="<?php echo $firstMatch['image']?>" alt="" class="w-full h-[200px] md:h-[350px] lg:h-[450px] xl:h-[550px] my-4 md:my-8 rounded-3xl shadow-lg">
                 </div>
-                <p class="py-6 font-bangla  text-base lg:text-xl ">
-                  হিজবুল্লাহ একের পর এক ধাক্কা খেয়েছে, খাচ্ছে। সংগঠনের কমান্ড কাঠামো ছেঁটে ফেলা হয়েছে। হিজবুল্লাহর ডজনের বেশি শীর্ষ কমান্ডারকে হত্যা করা হয়েছে। পেজার আর ওয়াকিটকির বিস্ফোরণের মাধ্যমে হিজবুল্লাহর যোগাযোগব্যবস্থা ধ্বংস করা হয়েছে। একের পর এক বিমান হামলায় চালিয়ে সংগঠনটির অনেক অস্ত্র ধ্বংস করা হয়েছে।
-                  যুক্তরাষ্ট্রভিত্তিক মধ্যপ্রাচ্যবিষয়ক নিরাপত্তা বিশ্লেষক মোহাম্মদ আল-বাশা বলেন, ‘হাসান নাসরুল্লাহর নিহতের ঘটনা গুরুত্বপূর্ণ প্রভাব ফেলবে। হিজবুল্লাহকে অস্থিতিশীল করে তুলতে পারে। এর ফলে হিজবুল্লাহর রাজনৈতিক ও সামরিক কৌশলে স্বল্পমেয়াদে পরিবর্তন আসতে পারে।’
-                  তবে কট্টর ইসরায়েলবিরোধী এই সংগঠন হঠাৎ করে হাল ছেড়ে দেবে, ইসরায়েলের আহ্বানে সাড়া দিয়ে শান্তির পথে ধাবিত হবে—আপাতত এমন কোনো আশা করা হয়তো ভুল হবে।
-                </p>
+                <p class="py-6 font-bangla  text-base lg:text-xl "><?php echo $firstMatch['mainParagraph']?></p>
           </div>
-        </section>
     </header>
     <main class="px-4 xl:px-0 bg-white">
        <!-- Section -->
     <section class="container py-12 font-siliguri">
-        <h2 class="text-center text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold pb-12">সেন্টমার্টিনে খরচ বাচাতে নিছের টিপস গুলো আপনার উপকারে আসতে পারে</h2>
-
+        <h2 class="text-center text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold pb-12"><?php echo $firstMatch['mainTitle2']?></h2>
+<?php }?>
         <!-- Grid Layout for Articles -->
         <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               <?php

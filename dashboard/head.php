@@ -6,7 +6,6 @@
     <!-- Site title -->
     <title>Trip Saint Martin Admin || <?php echo $_SESSION['auth']['name']; ?></title>
     <!-- flatpickr CSS -->
-    <link rel="stylesheet" href="<?php echo $baseurl ?>js/flatpickr.min.css">
     <link rel="stylesheet" href="<?php echo $baseurl ?>css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,6 +32,6 @@
             }
           }
         </script>
-        <script src="https://cdn.tiny.cloud/1/3ospo072d01oilxs1q5thzsjz4zlxh12kmwto54m8awth4jm/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+        
 
 </head>
